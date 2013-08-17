@@ -10,8 +10,12 @@ var geocodeAddressArray = function(addressArray) {
 	if(addressArray.length === 0) {
 		return;
 	} else {
-		geocoder.geocode(addressArray[0], function ( err, data ) {
-			console.log(addressArray[0]);
+		var address = addressArray[0].split("\t");
+                var id = address[0];
+		geocoder.geocode(address[1], function ( err, data ) {
+                       if (data.hasOwnProperty('results') && (data.results.length > 0) ) {
+			           console.log(id + "\t" + address[1]  + "\t" + data.results.length    + "\t" +  data.results[0].formatted_address  + "\t" + data.results[0].geometry.location.lat + "\t" + data.results[0].geometry.location.lng + "\t" + data.results[0].geometry.location_type);
+                        }
 			setTimeout(function(){
 				geocodeAddressArray(__.rest(addressArray));
 			},3000);
